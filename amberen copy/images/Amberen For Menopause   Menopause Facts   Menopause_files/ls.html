@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)http://tag.userreport.com/ls.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title></title>
+<style type="text/css"></style></head>
+<body>
+	<script type="text/javascript">
+		var UrlUtils = {
+			parseQueryString: function (queryString) {
+				var result = {};
+				queryString.replace(
+					new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+					function ($0, $1, $2, $3) {
+						result[$1] = $3;
+					}
+				);
+				return result;
+			},
+			composeQueryString: function (params) {
+				if (!params) {
+					return '';
+				}
+
+				var result = '';
+				for (var key in params) {
+					if (!params.hasOwnProperty(key)) {
+						continue;
+					}
+					result += key;
+					var value = params[key];
+					if (value != undefined && value != null) {
+						result += '=' + value;
+					}
+					result += '&';
+				}
+
+				// Remove trailing &
+				if (result.length > 0) {
+					result = result.substr(0, result.length - 1);
+				}
+				return result;
+			}
+		};
+
+		function sendMessage(message) {
+			window.parent.postMessage(message, '*');
+		}
+
+		function messageReceived(evt) {
+			try {
+				var message = evt.data;
+				// message format is commandName:commandArgs
+				var p = message.split(':');
+				var command = p[0];
+				var commandArgs = p[1];
+				var userIdKeyName = '__bpn_uid';
+				switch (command.toLowerCase()) {
+					case 'setuser':
+						window.localStorage[userIdKeyName] = commandArgs;
+						break;
+					case 'getuser':
+						var userId = window.localStorage[userIdKeyName] || '';
+						// send user id back
+						sendMessage('userId:' + userId);
+						break;
+					case 'setuser2':
+						var params = UrlUtils.parseQueryString(commandArgs);
+
+						if (typeof (window.localStorage[userIdKeyName]) != 'undefined' && window.localStorage[userIdKeyName] != params[userIdKeyName]) {
+							// clear existing parameters on userId change
+							localStorage.clear();	
+						}
+						
+						for (var paramName in params) {
+							window.localStorage[paramName] = params[paramName];
+						}
+						break;
+					case 'getuser2':
+						var result = UrlUtils.composeQueryString(window.localStorage);
+						// send user id back
+						sendMessage('getUserResult:' + result);
+						break;
+					case 'clearuser2':
+						window.localStorage.clear();
+				}
+
+			}
+			catch (err) {
+				sendMessage('error:' + err);
+			}
+		}
+
+		if (window.addEventListener) {
+			window.addEventListener("message", messageReceived, false);
+		}
+		else {
+			window.attachEvent("onmessage", messageReceived);
+		}
+
+		// send message that window is ready to accept commands
+		sendMessage('ready');
+	</script>
+
+
+</body></html>

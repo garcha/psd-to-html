@@ -1,0 +1,98 @@
+body{
+	width: 960px;
+	margin: 0px auto;
+}
+#container{
+	background: white;
+}
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+#background{
+	position: absolute;
+	opacity: .8;
+}
+#menuback{
+	position: relative;
+	background: #A1A194;
+	height: 100px;
+	opacity: .5;
+	margin-top: 20px;
+	margin-bottom: 350px;
+}
+#menufront{
+	margin: 0 50px;
+}
+header div ul li{
+	text-decoration: none;
+	display: inline-block;
+	padding-right: 20px;
+	margin-top: 40px;
+	padding-left: 20px;
+	color: white;
+	border-right: 1px solid white;
+	font-size: 20px;
+}
+a{
+	color: white;
+}
+.topheaders{
+	position: static;
+	box-sizing: border-box;
+	width: 230px;
+	display: inline-block;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-right: 1px solid black;
+	background: white;
+}
+subheader div div img{
+	float: left;
+	margin-right: 20px;
+	margin-top: 20px;
+	display: inline;
+} 
+.menuFirst{
+	border-left: 1px solid black;
+}
+h3{
+	margin: none;
+}
+#main{
+	margin-top: 50px;
+	margin-bottom: 50px; 
+}
+#article{
+	display: inline;
+	width: 550px;
+	float: left;
+	margin-right: 10px;
+}
+#sidebar{
+	width: 300px;
+	display: inline;
+	float: right;
+}
+footer{
+	clear: both;
+	display: block;
+	border-top: .5px solid black;
+	margin-bottom: 300px;
+}
+.footers{
+	box-sizing: border-box;
+	width: 300px;
+	display: inline;
+	float: left;
+	border-right: 1px solid right;
+}
+footer div ul li{
+	text-decoration: none;
+}
+footer div h3{
+	margin-left: 50px;
+}
